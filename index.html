@@ -1,0 +1,113 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>inter aktív E.T.</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- <link rel="manifest" href="site.webmanifest"> -->
+        <link rel="apple-touch-icon" href="tmpfavicon.png">
+        <link rel="shortcut icon" type="image/png" href="tmpfavicon.png"/>
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/activeet.css">
+    </head>
+    <body>
+        <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <div class="header"></div>
+        <div class="timer" data-bind="text: timerText"></div>
+        <div data-bind="text: error"></div>
+        <div data-bind="text: ''">Betöltés...</div>      
+        <div data-bind="with: currentVideo" class="player">
+            
+            <video id="reaction_video"
+                data-bind="
+                    attr:{
+                        src: $parent.showReaction()
+                    },
+                    visible: $parent.showReaction()
+                    "
+                width="100%"                 
+                frameborder="0" 
+                autostart="true"
+            ></video>
+            
+            <!-- ko if: type === 'local' -->
+            <video id="davideo"
+                data-bind="
+                    attr:{
+                        src: url
+                    },
+                    visible: !$parent.showReaction()"
+                width="100%" 
+                
+                frameborder="0" 
+                autostart="true"
+            ></video>
+            <!-- /ko -->
+            <!-- ko if: type === 'youtube' -->
+                <!-- <iframe 
+                    data-bind="
+                    attr:{
+                        src: url + $parent.videoParams
+                    },
+                    visible: !$parent.showReaction()
+                    "
+                    width="100%" 
+                    height="315" 
+                    frameborder="0" 
+                    autostart="true"
+                    gesture="media" 
+                    allow="encrypted-media" allowfullscreen></iframe> -->
+            <!-- /ko -->
+
+            <div class="guesses" data-bind="foreach: optionButtons">
+                <button class="guess" data-bind="                    
+                    enable: !$parents[1].showResults() && !$parents[1].showNext(),
+                    css: { 
+                        guessed: guessed() || $parents[1].showResults(), 
+                        correct: correct },                    
+                    click: $parents[1].guess.bind(this, $data)">
+                
+                <img class="bg" data-bind="attr: {
+                    src: $parents[1].buttons[index]
+                }">
+                
+                <!-- ko if: guessed() || $parents[1].showResults() -->
+                <img class="answer" data-bind="attr: {
+                    src: correct?'img/correct.png':$parents[1].badMarkers[index]
+                }">
+                <!-- /ko -->
+
+                <span data-bind="text: text"></span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="next" data-bind="if: showResults() || showNext(),">
+            <button data-bind="click: nextVideo, style: {
+                'background-image': 'url(\''+buttons[10]+'\')'
+            }">Következő -&gt;</button>
+        </div>
+        <div class="tmp" title="This project has been brought to you by Goose as part of The Minimal Project ™P">™P</div>
+
+    </body>
+    <script src="js/vendor/knockout-3.4.2.js"></script>
+    <script src="js/vendor/jquery-3.2.1.min.js"></script>
+    <!-- <script src="js/vendor/modernizr-3.5.0.min.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script> -->
+    <!-- <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script> -->
+
+    <!-- <script src="js/plugins.js"></script> -->
+    <script src="videos.js"></script>
+    <script src="js/main.js"></script>
+
+</html>
