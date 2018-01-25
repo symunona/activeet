@@ -1,7 +1,11 @@
 body{
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Indie Flower', cursive;
     background: black;
-    height: 100%;
+    height: 99vh;
+    overflow: hidden;
+}
+span, i{
+    font-family: 'Indie Flower', cursive;
 }
 button{ outline: 0}
 button:active{ outline: 0}
@@ -16,7 +20,9 @@ button:active{ outline: 0}
 }
 
 .guesses button{
-    width: 30%;
+    width: 25%;
+    margin-left: 2%;
+    margin-right: 2%;
     /* background: #f8fbdf; */
     background-position: center center;
     background-size: 100% 100%;
@@ -30,7 +36,7 @@ button:active{ outline: 0}
     font-size: 24px;
 }
 
-.guesses button img, img.answer{    
+button img, img.answer{    
     position: absolute;
     width: 100%;
     height: 100%;
@@ -38,30 +44,39 @@ button:active{ outline: 0}
     left: 0;
     background-color: transparent;
 }
+button img.bg{
+    opacity: 0.5;
+}
 
 
-.guesses button span{
+button span{
     position: absolute; 
     z-index: 9999;
-    left: 0;
-    top: 42px;
-    padding-top: 0px;
+    left: 0;    
+    margin-top: -10px;
     width: 100%;
     text-align: center;
 }
 
-
 .player{
     /* margin-top: 30px; */
     text-align: center;
+    height: 100%;
+    width: 100%;
+}
+video{
+    width: 100%;
+    height: 100%;    
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .next{
     position: fixed;
-    top: 10px;
-    right: 10px;
-    width: 250px;        
-    height: 70px;
+    top: 43%;
+    right: 40px;
+    width: 100px;        
+    height: 100px;
     text-align: center;
     background-color: transparent;
 }
@@ -110,4 +125,15 @@ button.guessed.correct{
     bottom: 0;
     right: 0;
     cursor: default;    
+}
+
+button.lang{
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    color: white;
+    background: transparent;
+    border: 0;
+    padding: 30px;
+    font-size: 24px;
 }

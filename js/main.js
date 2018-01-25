@@ -1,7 +1,7 @@
 
 var ViewModel = function(){
     
-    var self = window.app = this;
+    var self = window.app = this;    
 
     var timeToGuess = 60; // Seconds
     var timeToWaitTillCountownStarts = 1000;
@@ -19,7 +19,21 @@ var ViewModel = function(){
     self.showNext = ko.observable();
     self.showReaction = ko.observable();
     self.badMarkers = ['img/bad1.png','img/bad2.png','img/bad3.png']
+
+    self.otherLanguages = ['', 'ENG'];    
+
+    self.lang = ko.observable('');
     
+    self.nextLang = function(){
+        var currentIndex = self.otherLanguages.indexOf(self.lang());
+        if (currentIndex === self.otherLanguages.length-1){
+            currentIndex = 0;
+        }
+        else{
+            currentIndex ++;
+        }
+        self.lang(self.otherLanguages[currentIndex]);
+    }
     
     self.guess = function(userGuess){
         userGuess.guessed(true);
@@ -77,12 +91,21 @@ var ViewModel = function(){
         var video = videos[index];
         video.optionButtons = [];
         video.options.map(function(o, i){
-            video.optionButtons.push({
+            var button = {
                 text: o,
                 guessed: ko.observable(false),
                 correct: video.correct === o,
                 index: i
-            });
+            }
+            for(var langIndex in self.otherLanguages){
+                var lang = self.otherLanguages[langIndex];
+                if (video['options'+lang]){
+                    button['text'+lang] = video['options'+lang][i];
+                }
+            }
+
+            video.optionButtons.push(button);            
+
         });
         randomize(video.optionButtons)
         video.type = video.url.indexOf('https://www.youtube.com/') === 0?'youtube':'local';
@@ -114,7 +137,7 @@ var ViewModel = function(){
     self.success = function(){
         self.stopTimer();
         setTimeout(function(){
-            self.timerText('Jó megfejtés!');                      
+            self.timerText(':)');                      
             self.showNext(true);            
         },0)
     }
@@ -170,7 +193,7 @@ var ViewModel = function(){
                 if (!self.showNext() && !self.showResults()){
                     self.fail();                                        
                 }            
-                self.timerText('Lejárt az idő');                
+                self.timerText(':(');                
                 self.timerRunning = false;
             }            
         }    

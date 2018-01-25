@@ -15,6 +15,9 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/activeet.css">
+
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+
     </head>
     <body>
         <!--[if lte IE 9]>
@@ -46,8 +49,7 @@
                     attr:{
                         src: url
                     },
-                    visible: !$parent.showReaction()"
-                width="100%" 
+                    visible: !$parent.showReaction()"                
                 
                 frameborder="0" 
                 autostart="true"
@@ -87,16 +89,20 @@
                 }">
                 <!-- /ko -->
 
-                <span data-bind="text: text"></span>
+                <span data-bind="text: $data['text' + $parents[1].lang()] || text"></span>
                 </button>
             </div>
         </div>
         
         <div class="next" data-bind="if: showResults() || showNext(),">
-            <button data-bind="click: nextVideo, style: {
-                'background-image': 'url(\''+buttons[10]+'\')'
-            }">Következő -&gt;</button>
+            <button data-bind="click: nextVideo">
+                <img class='bg' data-bind="attr: { src: buttons[10] }">
+                <span>-&gt;</span>
+            </button>
         </div>
+        <button class="lang" data-bind="click: nextLang">
+           <i data-bind="text: lang() || 'HU'"></i>      
+        </button>
         <div class="tmp" title="This project has been brought to you by Goose as part of The Minimal Project ™P">™P</div>
 
     </body>
