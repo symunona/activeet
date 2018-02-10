@@ -1,13 +1,14 @@
 body{
     font-family: 'Indie Flower', cursive;
-    background: black;
+    background: black; color: #ffef45;
     height: 99vh;
     overflow: hidden;
 }
 span, i{
     font-family: 'Indie Flower', cursive;
 }
-button{ outline: 0}
+button{ outline: 0; background-color: transparent; border: 0;color: #ffef45;}
+
 button:active{ outline: 0}
 
 .guesses{
@@ -16,7 +17,13 @@ button:active{ outline: 0}
     text-align: center;
     position: fixed;
     width: 100%;
-    z-index: 999;
+    z-index: 999;    
+    transition-duration: 500ms;
+    transform: translate(0, 150%);
+}
+.guesses.loaded{
+    transition-duration: 500ms;
+    transform: translate(0, 0);
 }
 
 .guesses button{
@@ -53,7 +60,7 @@ button span{
     position: absolute; 
     z-index: 9999;
     left: 0;    
-    margin-top: -10px;
+    margin-top: -8px;
     width: 100%;
     text-align: center;
 }
@@ -79,6 +86,7 @@ video{
     height: 100px;
     text-align: center;
     background-color: transparent;
+    display: none;
 }
 .next button{
     background-position: center center;
@@ -112,7 +120,7 @@ button.guessed.correct{
 .timer{
     text-align: center;
     padding: 15px;
-    position: fixed;
+    position: absolute;
     color: white;        
     position: fixed;
     font-size: 40px;
@@ -121,19 +129,49 @@ button.guessed.correct{
 }
 
 .tmp{
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    cursor: default;    
+    position: fixed; bottom: 0;right: 0;
+    cursor: default; color: #aaa; opacity: 0.5;
 }
 
 button.lang{
-    position: fixed;
+    position: absolute;
     top: 0px;
     right: 0px;
-    color: white;
+    /* color: white; */
     background: transparent;
     border: 0;
     padding: 30px;
     font-size: 24px;
 }
+
+.intro-screen, .score-screen{
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: #813b8e; color: #ffef45;
+    font-family: 'Indie Flower', cursive;    
+    z-index: 999;
+}
+
+.intro-screen h1, .score-screen h2{
+    font-size: 40px; text-transform: uppercase;    
+    position: absolute; top: 40%; text-align: center;
+    width: 100%;
+    display: block;
+} 
+.score-screen h2{
+    top: 10%;
+}
+.scores{
+    position: absolute; top:40%; text-align: center; width: 100%; font-style: italic;    
+}
+
+
+.start-game{
+    position: absolute; display: block; top:75%; left: calc( 50% - 150px ); width: 300px;    
+    height: 80px;
+}
+
+.start-game-info{
+    position: absolute; top:55%; text-align: center; width: 100%; font-style: italic;    
+}
+
+.hidden{display: none;}
