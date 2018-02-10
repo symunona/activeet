@@ -1,15 +1,39 @@
 
+var timeToGuess = 90; // Seconds
+
+var langs = {
+    ENG:{
+        info: `Get the most quests right in ${timeToGuess} seconds!`,
+        start: 'Start',
+        score: 'Score',
+        newgame: 'New Game',
+        firstHit: 'First Try',
+        secondHit: 'Second Try',
+        badAnswers: 'Did not get it'
+    },
+    '':{
+        info: `Ki tud több rejtvényt megfejteni ${timeToGuess} másodperc alatt?`,
+        start: 'Indulás!',
+        score: 'Eredmények',
+        newgame: 'Új játék',
+        firstHit: 'Elsőre',
+        secondHit: 'Másodikra',
+        badAnswers: 'Nem Talált'
+    }
+}
+
+
 var ViewModel = function(){
     
     var self = window.app = this;    
 
-    var timeToGuess = 60; // Seconds
-    var timeToWaitTillCountownStarts = 1000;
+    
+    var timeToWaitTillCountownStarts = 500;
 
     self.videoParams = '?autoplay=1&showinfo=0&rel=0&controls=0';    
 
     self.currentVideoIndex = ko.observable(0);
-    // randomize(videos);
+    randomize(videos);
     self.videos = ko.observable(videos);
     self.currentVideo = ko.observable();
     self.timerText = ko.observable();
@@ -20,9 +44,49 @@ var ViewModel = function(){
     self.showReaction = ko.observable();
     self.badMarkers = ['img/bad1.png','img/bad2.png','img/bad3.png']
 
+    self.introScreen = ko.observable(true);
+    
+    self.showScore = ko.observable(false);
+    self.showGuesses = ko.observable(false);    
+
+    self.score = {
+        firstHit: 0,
+        secondHit: 0,
+        badAnswers: 0
+    }
+    
+
+    self.startGame = function(){        
+                
+        self.loadVideo(0);
+
+        self.score.firstHit = 0;
+        self.score.secondHit = 0;
+        self.score.badAnswers = 0;
+
+        $('.intro-screen').animate({top: '-100%'}, 500)
+        setTimeout(function(){
+        
+            self.startTimer(timeToGuess)        
+            self.introScreen(false);
+            self.startVideo();
+            self.showGuesses(true);
+            
+            
+        }, 1000)
+        
+        
+    }
+
     self.otherLanguages = ['', 'ENG'];    
 
+    self.langs = langs;
     self.lang = ko.observable('');
+    ko.bindingHandlers.t = {
+        update: function(element, valueAccessor){
+            $(element).text(langs[self.lang()][valueAccessor()])
+        }
+    }
     
     self.nextLang = function(){
         var currentIndex = self.otherLanguages.indexOf(self.lang());
@@ -40,7 +104,17 @@ var ViewModel = function(){
         
         if (userGuess.correct){            
             self.playHappy();
-            self.success();      
+            self.success();   
+            var guessedNumberFar = self.currentVideo()
+                .optionButtons.filter(function(button){
+                    return button.guessed();
+                }).length;
+            if (guessedNumberFar === 1 ){
+                self.score.firstHit++;
+            }
+            else{
+                self.score.secondHit++;
+            }
         }
         else{
             var guessedNumberFar = self.currentVideo()
@@ -48,6 +122,7 @@ var ViewModel = function(){
                     return button.guessed();
                 }).length;
             if (self.currentVideo().optionButtons.length-guessedNumberFar < 2){
+                self.score.badAnswers++;
                 self.fail();
             }
             self.playSad(function(){            
@@ -71,8 +146,9 @@ var ViewModel = function(){
         self.pauseVideo();
         self.playReactionVideo(function(){
             self.showReaction(false);            
+            self.showGuesses(false);
             self.nextVideo();
-        });      
+        });                      
     }
 
     self.nextVideo = function(){
@@ -85,9 +161,11 @@ var ViewModel = function(){
             self.currentVideoIndex(0);
         }
         self.loadVideo(self.currentVideoIndex());
+        self.startVideo();
     }
 
     self.loadVideo = function(index){
+
         var video = videos[index];
         video.optionButtons = [];
         video.options.map(function(o, i){
@@ -121,17 +199,24 @@ var ViewModel = function(){
         self.showResults(false);
         self.showNext(false);        
 
-        self.stopTimer();
+        // self.stopTimer();
         
-        self.currentTime = video.time || timeToGuess
-        self.timerText(self.currentTime);
-
-        setTimeout(function(){
-            self.startVideo()
-            self.startTimer();
-        }, timeToWaitTillCountownStarts);
-        
+        // self.currentTime = video.time || timeToGuess        
+        self.showGuesses(false);
         self.currentVideo(video);
+        setTimeout(function(){
+            self.showGuesses(true);
+        }, 500)
+        
+
+        // setTimeout(function(){
+        
+        // self.startVideo()
+
+            // self.startTimer();
+        // }, 0);
+        
+        
     }
 
     self.success = function(){
@@ -151,19 +236,23 @@ var ViewModel = function(){
     }
     
     self.stopTimer = function(){ self.timerRunning = false; }
-    self.startTimer = function(){ self.timerRunning = true; }
+    self.startTimer = function(startFrom){         
+        self.currentTime = startFrom || self.currentTime;
+        self.timerText(self.currentTime);
+        self.timerRunning = true; 
+    }
 
     self.startVideo = function(){
         var video = document.getElementById('davideo');
         if (!video.ended){
             video.play();
-        }        
-        self.timerRunning = true;
+        }                
+        self.startTimer();
     }
     self.pauseVideo = function(){
         var video = document.getElementById('davideo');
         video.pause();
-        self.timerRunning = false;
+        self.stopTimer()
     }
 
     self.playReactionVideo = function(callback){
@@ -176,6 +265,7 @@ var ViewModel = function(){
     for (var i=1; i<15; i++){
         self.buttons.push('img/button'+i+'.png');
     }
+    randomize(self.buttons);
 
     function randomize(array){
         array.sort(function(){
@@ -190,16 +280,31 @@ var ViewModel = function(){
                 self.currentTime = self.currentTime - 1;
             }
             else {
-                if (!self.showNext() && !self.showResults()){
-                    self.fail();                                        
-                }            
-                self.timerText(':(');                
+                // if (!self.showNext() && !self.showResults()){
+                //     self.fail();                                        
+                // }            
+                // self.timerText(':(');    
+                self.timerText('')   ;
+                self.showScore(stringifyScore(self.score));
+                $('.score-screen').css('top', '-100%').animate({top:0}, 500);                
+                self.showGuesses(false);
+                self.pauseVideo();
+
                 self.timerRunning = false;
+
             }            
         }    
     },1000)
 
-    self.loadVideo(0);
+    function stringifyScore(score){
+        var ret = ''
+        Object.keys(score).map(function(key){
+            ret += langs[self.lang()][key] +': ' + score[key] + '\n';
+        })
+        return ret;
+    }
+
+    // self.loadVideo(0);
 
     window.onerror = function(e){
         self.error(e.message);
