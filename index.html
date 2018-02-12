@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/activeet.css">
 
-    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> -->
 
 </head>
 
@@ -62,7 +62,9 @@
 
 
         <div>
-            <div class="timer" data-bind="text: timerText"></div>
+            <div class="timer" 
+                onclick="location.reload()"
+                data-bind="text: timerText"></div>
 
             <div data-bind="with: currentVideo" class="player">
 
@@ -98,7 +100,10 @@
 
                 <div class="guesses" data-bind="css: {loaded: $parent.showGuesses}, foreach: optionButtons">
                     <button class="guess" data-bind="                    
-                    enable: !$parents[1].showResults() && !$parents[1].showNext(),
+                    enable: !$parents[1].showResults() && 
+                            !$parents[1].showNext() && 
+                            !$parents[1].showReaction()                            
+                            ,
                     css: { 
                         guessed: guessed() || $parents[1].showResults(), 
                         correct: correct },                    
