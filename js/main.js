@@ -1,5 +1,5 @@
 
-var timeToGuess = 50; // Seconds
+var timeToGuess = 90; // Seconds
 
 var langs = {
     ENG:{
