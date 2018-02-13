@@ -1,9 +1,9 @@
 
-var timeToGuess = 90; // Seconds
+var timeToGuess = 50; // Seconds
 
 var langs = {
     ENG:{
-        info: `Get the most quests right in ${timeToGuess} seconds!`,
+        info: `Get the most puzzles right in ${timeToGuess} seconds!`,
         start: 'Start',
         score: 'Score',
         newgame: 'New Game',
@@ -12,7 +12,7 @@ var langs = {
         badAnswers: 'Did not get it'
     },
     '':{
-        info: `Ki tud több rejtvényt megfejteni ${timeToGuess} másodperc alatt?`,
+        info: `Ki találja ki a legtöbb feladványt ${timeToGuess} másodperc alatt?`,
         start: 'Indulás!',
         score: 'Eredmények',
         newgame: 'Új játék',
@@ -25,10 +25,9 @@ var langs = {
 
 var ViewModel = function(){
     
-    var self = window.app = this;    
-
-    
+    var self = window.app = this;        
     var timeToWaitTillCountownStarts = 500;
+    var waitingAfterVideoEnded = 4000;
 
     self.videoParams = '?autoplay=1&showinfo=0&rel=0&controls=0';    
 
@@ -101,10 +100,13 @@ var ViewModel = function(){
     
     self.guess = function(userGuess){
         userGuess.guessed(true);
+
+        self.showReaction(false);
         
         if (userGuess.correct){            
             self.playHappy();
             self.success();   
+            
             var guessedNumberFar = self.currentVideo()
                 .optionButtons.filter(function(button){
                     return button.guessed();
@@ -123,22 +125,26 @@ var ViewModel = function(){
                 }).length;
             if (self.currentVideo().optionButtons.length-guessedNumberFar < 2){
                 self.score.badAnswers++;
-                self.fail();
+                console.warn('really fail')
+                self.fail();                
             }
-            self.playSad(function(){            
-                self.showReaction(false);        
-                self.startVideo();            
-            });
+            else{
+                self.playSad(function(){            
+                    self.showReaction(false);        
+                    self.startVideo();            
+                });
+            }
         }
     }
 
     self.playSad = function(callback){        
         var index = Math.floor(Math.random()*reactions.sad.length);
-        var reactionUrl = reactions.sad[index];        
+        var reactionUrl = reactions.sad[index];                
         self.showReaction(reactionUrl);
         self.pauseVideo();
-        self.playReactionVideo(callback);        
+        self.playReactionVideo(callback);                
     }
+
     self.playHappy = function(){
         var index = Math.floor(Math.random()*reactions.happy.length);
         var reactionUrl = reactions.happy[index];        
@@ -199,23 +205,11 @@ var ViewModel = function(){
         self.showResults(false);
         self.showNext(false);        
 
-        // self.stopTimer();
-        
-        // self.currentTime = video.time || timeToGuess        
         self.showGuesses(false);
         self.currentVideo(video);
         setTimeout(function(){
             self.showGuesses(true);
         }, 500)
-        
-
-        // setTimeout(function(){
-        
-        // self.startVideo()
-
-            // self.startTimer();
-        // }, 0);
-        
         
     }
 
@@ -226,6 +220,7 @@ var ViewModel = function(){
             self.showNext(true);            
         },0)
     }
+
     self.fail = function(){
         self.stopTimer();
         self.showResults(true);
@@ -248,7 +243,18 @@ var ViewModel = function(){
             video.play();
         }                
         self.startTimer();
+        video.onended = function(){
+            setTimeout(self.videoTimeout.bind(this, self.currentVideo().url), waitingAfterVideoEnded)
+        }
     }
+
+    self.videoTimeout = function(url){
+        if (url === self.currentVideo().url){
+            self.score.badAnswers++;
+            self.nextVideo();
+        }        
+    }
+
     self.pauseVideo = function(){
         var video = document.getElementById('davideo');
         video.pause();

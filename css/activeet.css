@@ -7,7 +7,9 @@ body{
 span, i{
     font-family: 'Indie Flower', cursive;
 }
-button{ outline: 0; background-color: transparent; border: 0;color: #ffef45;}
+button{ outline: 0; background-color: transparent; border: 0;color: #ffef45;
+    font-size: 25px;        
+}
 
 button:active{ outline: 0}
 
@@ -51,16 +53,25 @@ button img, img.answer{
     left: 0;
     background-color: transparent;
 }
+/* 
+button:hover img, img.answer:hover{ 
+    transition-duration: 500ms;
+    transform: scale(10%)
+} */
+
 button img.bg{
     opacity: 0.5;
 }
 
+button:hover span{
+    font-weight: bold;
+}
 
 button span{
     position: absolute; 
     z-index: 9999;
     left: 0;    
-    margin-top: -8px;
+    margin-top: -15px;
     width: 100%;
     text-align: center;
 }
@@ -118,14 +129,15 @@ button.guessed.correct{
 }
 
 .timer{
-    text-align: center;
+    text-align: right;
     padding: 15px;
     position: absolute;
     color: white;        
     position: fixed;
     font-size: 40px;
-    left: 10%;
-    top: 20px;
+    width: 10%;
+    padding-top: 40px;
+    z-index: 9999;
 }
 
 .tmp{
@@ -152,8 +164,8 @@ button.lang{
 }
 
 .intro-screen h1, .score-screen h2{
-    font-size: 40px; text-transform: uppercase;    
-    position: absolute; top: 40%; text-align: center;
+    font-size: 60px; text-transform: uppercase;    
+    position: absolute; top: 35%; text-align: center;
     width: 100%;
     display: block;
 } 
@@ -161,6 +173,7 @@ button.lang{
     top: 10%;
 }
 .scores{
+    font-size: 30px;
     position: absolute; top:40%; text-align: center; width: 100%; font-style: italic;    
 }
 
@@ -171,6 +184,7 @@ button.lang{
 }
 
 .start-game-info{
+    font-size: 30px;
     position: absolute; top:55%; text-align: center; width: 100%; font-style: italic;    
 }
 
