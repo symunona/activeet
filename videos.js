@@ -1,158 +1,88 @@
 var videos = [
-    {
-        "url": "videos/mutogatas_01_bujocska.mp4",
-        "options": ["bújocska", "kincskereső", "elveszett"],
-        "optionsENG": ["hide and seek", "explorer", "lost"],
-        "correct": "bújocska",        
-        "time": 25
-    },    
+    
     {
         "url": "videos/mutogatas_02_dama.mp4",
-        "options": ["dáma", "vajaskenyér", "magasélet"],
-        "optionsENG": ["dama", "butter bread", "high life"],
-        "correct": "dáma",        
-        "time": 25
+        "options": ["dáma", "sminkkészlet", "hiúság"],
+        "optionsENG": ["dama", "makeup set", "vanity"],
+        "correct": "dáma"        
     },
     {
         "url": "videos/mutogatas_03_homokora.mp4",
-        "options": ["homokóra", "péklapát", "palacsintázó"],
-        "optionsENG": ["sand glass", "baker tray", "crepe place"],
-        "correct": "homokóra",
-        "time": 30
+        "options": ["homokóra", "sütőforma", "palacsintázó"],
+        "optionsENG": ["sand glass", "cake tin", "crepe place"],
+        "correct": "homokóra"        
     },
     {
         "url": "videos/mutogatas_04_verseny.mp4",
-        "options": ["futás", "csúfolódás", "verseny"],
-        "optionsENG": ["running", "bullying", "race"],
-        "correct": "verseny",
-        "time": 15
+        "options": ["menekülés", "döntetlen", "verseny"],
+        "optionsENG": ["escape", "draw", "competeing"],
+        "correct": "verseny"
     },
     {
         "url": "videos/mutogatas_05_sakkmatt.mp4",
-        "options": ["sakk-matt", "Szécheny fürdő", "játék határok nélkül"],
-        "optionsENG": ["check mate", "Szécheny bath", "Jeux Sans Frontières"],
-        "correct": "sakk-matt",
-        "time": 25
+        "options": ["sakk-matt", "dámajáték", "káröröm"],
+        "optionsENG": ["checkmate", "draughts", "gloating"],
+        "correct": "sakk-matt"
     },
     {
         "url": "videos/mutogatas_06_lolepes.mp4",
-        "options": ["lólépés", "látens", "létra"],
-        "optionsENG": ["horse jump", "latent", "ladder"],
-        "correct": "lólépés",
-        "time": 15
-    },
-    {
-        "url": "videos/mutogatas_07_oroszrulett.mp4",
-        "options": ["oroszrulett", "pisztoly", "optimizmus"],
-        "optionsENG": ["russian rulett", "pistol", "optimism"],
-        "correct": "oroszrulett",
-        "time": 20
+        "options": ["lólépés", "szökdécselés", "ugróiskola"],
+        "optionsENG": ["knitght's jump", "hopping", "hoppscotch"],
+        "correct": "lólépés"
     },
     {
         "url": "videos/mutogatas_08_szabaduloszoba.mp4",
-        "options": ["szabadulószoba", "szenvedéstörténet", "kínzókamra"],
-        "optionsENG": ["escape room", "crucification", "torture chamber"],
-        "correct": "szabadulószoba",
-        "time": 30
-    },
-    {
-        "url": "videos/mutogatas_09_twister.mp4",
-        "options": ["twister", "gabalyodás", "építkezés"],
-        "optionsENG": ["twister", "tangle", "construction"],
-        "correct": "twister",
-        "time": 30
+        "options": ["szabadulószoba", "mágneses tér", "kínzókamra"],
+        "optionsENG": ["escape room", "magnetic space", "torture chamber"],
+        "correct": "szabadulószoba"
     },
     {
         "url": "videos/mutogatas_10_pokerarc.mp4",
-        "options": ["pókerarc", "robot", "koncentráció"],
-        "optionsENG": ["poker face", "robot", "concentration"],
-        "correct": "pókerarc",
-        "time": 20
-    },
-    {
-        "url": "videos/mutogatas_11_parnacsata.mp4",
-        "options": ["párnacsata", "pizsiparty", "káosz"],
-        "optionsENG": ["pillow fight", "pijama party", "chaos"],
-        "correct": "párnacsata",
-        "time": 30
+        "options": ["pókerarc", "kitartó", "koncentráció"],
+        "optionsENG": ["poker face", "persistent", "concentration"],
+        "correct": "pókerarc"
     },
     {
         "url": "videos/mutogatas_12_kinevetavegen.mp4",
-        "options": ["kinevetavégén", "önértékelés", "hamis tanúzás"],
-        "optionsENG": ["who laughs at the end", "self esteem", "lying under oath"],
-        "correct": "kinevetavégén",
-        "time": 25
-    },
-    
-    {
-        "url": "videos/rajz_01_pokerarc.mp4",
-        "options": ["pókerarc", "hamiskártyás", "kártyatrükk"],
-        "optionsENG": ["poker face", "rook", "card trick"],
-        "correct": "pókerarc",
-        "time": 50
+        "options": ["kinevetavégén", "kész átversls", "köpönyegforgató"],
+        "optionsENG": ["who laughs at the end", "Just for Laughs", "turncoat"],
+        "correct": "kinevetavégén"
     },
     {
         "url": "videos/rajz_02_kibic.mp4",
-        "options": ["kibic", "póker asztal", "díler"],
-        "optionsENG": ["cheater", "poker table", "dealer"],
-        "correct": "kibic",
-        "time": 60
-    },
+        "options": ["kibic", "krupié", "kaszinó"],
+        "optionsENG": ["cheater", "croupier", "casino"],
+        "correct": "kibic"
+    },    
     {
-        "url": "videos/rajz_03_lolepes.mp4",
-        "options": ["lólépés", "ügetés", "szamárfüles"],
-        "optionsENG": ["horse jump", "trot", "dog-eared"],
-        "correct": "lólépés",
-        "time": 60
-    },
-    {
-        "url": "videos/rajz_04_libajatek.mp4",
-        "options": ["libajáték", "kacsamell", "madárlátta"],
-        "optionsENG": ["goose game", "duck breast", "birdwatch"],
-        "correct": "libajáték",
-        "time": 60
-    },
-    {
-        "url": "videos/rajz_05_bujocska.mp4",
-        "options": ["bújócska", "mikrofonpróba", "mérnök"],
-        "optionsENG": ["hide and seek", "microphone test", "engineer"],
-        "correct": "bújócska",
-        "time": 50
-    },
-    {
-        "url": "videos/rajz_06_kinevetavegen.mp4",
-        "options": ["kinevetavégén", "hétfő", "eufória"],
-        "optionsENG": ["who laughs at the end", "Monday", "euphoria"],
-        "correct": "kinevetavégén",
-        "time": 50
+        "url": "videos/rajz_09_szechenyifurdo.mp4",
+        "options": ["Széchenyi fürdő", "Jabba", "hatalmi játszma"],
+        "optionsENG": ["Széchenyi fürdő bath", "Jabba", "power game"],
+        "correct": "Széchenyi fürdő"
     },
     {
         "url": "videos/rajz_07_szerencsekartya.mp4",
-        "options": ["szerencsekártya", "növénytan", "magyar kártya"],
-        "optionsENG": ["lucky card", "plants", "Hungarian cards"],
-        "correct": "szerencsekártya",
-        "time": 50
+        "options": ["szerencsekártya", "levelezőlap", "franciakártya"],
+        "optionsENG": ["lucky card", "post card", "French cards"],
+        "correct": "szerencsekártya"
     },
     {
-        "url": "videos/rajz_08_oroszrulett.mp4",
-        "options": ["oroszrulett", "összeesküvéselmélet", "casino"],
-        "optionsENG": ["russian rulett", "conteo", "casino"],
-        "correct": "oroszrulett",
-        "time": 50
-    },
-    {
-        "url": "videos/rajz_09_sakkmatt.mp4",
-        "options": ["sakk-matt", "túlsúly", "nyugdíjas klub"],
-        "optionsENG": ["check mate", "obesity", "social club"],
-        "correct": "sakk-matt",
-        "time": 50
-    },
+        "url": "videos/rajz_04_libajatek.mp4",
+        "options": ["libajáték", "a megkopasztott verép", "kacsaúsztató"],
+        "optionsENG": ["goose game", "The Plucked Sparrow", "duck pond"],
+        "correct": "libajáték"
+    },    
     {
         "url": "videos/rajz_10_hamiskartyas.mp4",
-        "options": ["hamiskártyás", "póker", "kerekasztal"],
-        "optionsENG": ["rook", "poker", "round table"],
-        "correct": "hamiskártyás",
-        "time": 50
+        "options": ["hamiskártyás", "aduász", "kerekasztal"],
+        "optionsENG": ["rook", "trump card", "round table"],
+        "correct": "hamiskártyás"
+    },
+    {
+        "url": "videos/rajz_05_bujocska.mp4",
+        "options": ["bújócska", "melankólia", "kukucskál"],
+        "optionsENG": ["hide and seek", "melancholy", "peeping"],
+        "correct": "bújócska"
     }
 ];
 
